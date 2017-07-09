@@ -1,4 +1,4 @@
-# Visual Studio 2015 user specific files
+# Visual Studio user specific files
 .vs/
 ipch/
 *.aps
@@ -120,3 +120,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Unused StarterContent Assets
+Content/StarterContent/*
