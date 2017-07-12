@@ -28,6 +28,6 @@ private:
 	float CrosshairPositionY = 0.3333f;
 
 	UPROPERTY(EditAnywhere, meta = (Category = "Firing", DisplayName = "Fire Distance (m)"))
-	float TraceRange = 500.0f;
+	float TraceRange = 25.0f;
 
 };

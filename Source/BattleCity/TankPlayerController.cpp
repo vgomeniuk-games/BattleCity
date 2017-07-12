@@ -16,12 +16,13 @@ ATank* ATankPlayerController::GetControlledTank() const {
 }
 
 void ATankPlayerController::AimTowardsCrosshair() {
-	if (!GetControlledTank()) { return; }
+	ATank* player = GetControlledTank();
+	if (!player) { return; }
 
 	// Trace to world position
 	FVector HitLocation;
 	if (TraceHitLocation(HitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *HitLocation.ToString());
+		player->AimAt(HitLocation);
 	}
 }
 
