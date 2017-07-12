@@ -18,7 +18,35 @@ ATank* ATankPlayerController::GetControlledTank() const {
 void ATankPlayerController::AimTowardsCrosshair() {
 	if (!GetControlledTank()) { return; }
 
-	// Transform 2d crosshair position on screen to actual world position
+	// Trace to world position
+	FVector HitLocation;
+	if (TraceHitLocation(HitLocation)) {
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *HitLocation.ToString());
+	}
+}
 
-	// Rotate turret to the aim respectively
+bool ATankPlayerController::TraceHitLocation(FVector& HitLocation) const {
+	// Get crosshair's posiotion
+	struct { int32 x; int32 y; } Viewport;
+	GetViewportSize(Viewport.x, Viewport.y);
+	FVector2D ScreenPosition = FVector2D(Viewport.x * CrosshairPositionX, Viewport.y * CrosshairPositionY);
+
+	// Transform 2d crosshair position on screen to actual look direction
+	FVector LookDirection;
+	{
+		FVector _;  // Unused/ Will be removed once goes out of block's scope
+		if (!DeprojectScreenPositionToWorld(ScreenPosition.X, ScreenPosition.Y, _, LookDirection)) {
+			return false;
+		}
+	}
+
+	// Trace along found direction
+	FHitResult HitResult;
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+	FVector EndLocation = StartLocation + LookDirection * TraceRange * 100;  // Measurement: cm => m
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility)) {
+		HitLocation = HitResult.Location;
+		return true;
+	}
+	return false;
 }
