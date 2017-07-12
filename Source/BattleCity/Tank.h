@@ -15,17 +15,9 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 	void AimAt(FVector AimLocation);
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-private:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	UFUNCTION(BlueprintCallable, meta = (Category = "Setup"))
+	void SetTurret(UStaticMeshComponent* Turret);
 
 protected:
 	UAimingComponent* AimingComponent = nullptr;

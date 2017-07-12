@@ -14,25 +14,11 @@ UAimingComponent::UAimingComponent()
 }
 
 
-// Called when the game starts
-void UAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
-
 void UAimingComponent::AimAt(const FVector& AimLocation) {
 	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"), *(GetOwner()->GetName()), *AimLocation.ToString());
+}
+
+
+void UAimingComponent::SetTurret(UStaticMeshComponent* Component) {
+	Turret = Component;
 }

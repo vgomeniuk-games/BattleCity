@@ -17,24 +17,7 @@ void ATank::AimAt(FVector AimLocation) {
 	AimingComponent->AimAt(AimLocation);
 }
 
-// Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-	
+
+void ATank::SetTurret(UStaticMeshComponent* Turret) {
+	AimingComponent->SetTurret(Turret);
 }
-
-// Called every frame
-void ATank::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-

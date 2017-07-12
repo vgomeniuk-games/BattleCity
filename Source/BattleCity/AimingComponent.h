@@ -16,15 +16,9 @@ public:
 	// Sets default values for this component's properties
 	UAimingComponent();
 	virtual void AimAt(const FVector& AimLocation);
+	virtual void SetTurret(UStaticMeshComponent* Component);
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
+private:
+	UStaticMeshComponent* Turret;
 	
 };
