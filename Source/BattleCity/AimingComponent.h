@@ -1,11 +1,10 @@
 // Viktor Gomeniuk : https://github.com/vgomeniuk
 
 #pragma once
-
-#include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "AimingComponent.generated.h"
 
+class UTurretComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLECITY_API UAimingComponent : public UActorComponent
@@ -13,12 +12,14 @@ class BATTLECITY_API UAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UAimingComponent();
-	virtual void AimAt(const FVector& AimLocation);
-	virtual void SetTurret(UStaticMeshComponent* Component);
+	virtual void AimAt(const FVector& AimLocation, float LaunchSpeed);
+	virtual void SetTurret(UTurretComponent* Component);
+
+protected:
+	virtual void RotateTurret(FVector DesiredDirection);
 
 private:
-	UStaticMeshComponent* Turret;
+	UTurretComponent* Turret;
 	
 };
