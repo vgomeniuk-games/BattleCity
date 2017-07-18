@@ -21,6 +21,9 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (Category = "Setup"))
 	void SetTurret(UTurretComponent* Turret);
 
+	UFUNCTION(BlueprintCallable, meta = (Category = "Gameplay Actions"))
+	void Fire();
+
 protected:
 	UAimingComponent* AimingComponent = nullptr;
 	

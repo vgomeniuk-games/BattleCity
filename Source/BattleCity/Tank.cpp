@@ -18,6 +18,10 @@ void ATank::AimAt(FVector AimLocation) {
 	AimingComponent->AimAt(AimLocation, LaunchSpeed);
 }
 
+void ATank::Fire() {
+	UE_LOG(LogTemp, Warning, TEXT("Fire"));
+}
+
 
 void ATank::SetTurret(UTurretComponent* Turret) {
 	AimingComponent->SetTurret(Turret);
