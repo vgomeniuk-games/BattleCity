@@ -3,8 +3,10 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "AimingComponent.h"
 #include "Tank.generated.h"
+
+class UAimingComponent;
+class UTurretComponent;
 
 UCLASS()
 class BATTLECITY_API ATank : public APawn
@@ -17,9 +19,13 @@ public:
 	void AimAt(FVector AimLocation);
 	
 	UFUNCTION(BlueprintCallable, meta = (Category = "Setup"))
-	void SetTurret(UStaticMeshComponent* Turret);
+	void SetTurret(UTurretComponent* Turret);
 
 protected:
 	UAimingComponent* AimingComponent = nullptr;
 	
+private:
+
+	UPROPERTY(EditAnywhere, Category="Firing")
+	float LaunchSpeed = 1000;
 };
