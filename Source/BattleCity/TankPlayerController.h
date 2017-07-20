@@ -21,13 +21,13 @@ private:
 	bool TraceHitLocation(FVector& HitLocation) const;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "CrosshairPosition", DisplayName = "X")
+	UPROPERTY(EditDefaultsOnly, Category = "CrosshairPosition", DisplayName = "X")
 	float CrosshairPositionX = 0.5f;
 
-	UPROPERTY(EditAnywhere, meta=(Category = "CrosshairPosition", DisplayName="Y"))
+	UPROPERTY(EditDefaultsOnly, meta=(Category = "CrosshairPosition", DisplayName="Y"))
 	float CrosshairPositionY = 0.3333f;
 
-	UPROPERTY(EditAnywhere, meta = (Category = "Firing", DisplayName = "Fire Distance (m)"))
+	UPROPERTY(EditDefaultsOnly, meta = (Category = "Firing", DisplayName = "Fire Distance (m)"))
 	float TraceRange = 25.0f;
 
 };

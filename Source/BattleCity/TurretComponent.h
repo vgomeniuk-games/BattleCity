@@ -18,6 +18,6 @@ public:
 	void Rotate(float RelativeSpeed);
 	
 private:
-	UPROPERTY(EditAnywhere, Category = "Setup", meta=(DisplayName="Max Rotation Speed (degree-per-second)"))
+	UPROPERTY(EditDefaultsOnly, Category = "Setup", meta=(DisplayName="Max Rotation Speed (degree-per-second)"))
 	float MaxRotationSpeed = 60;
 };
