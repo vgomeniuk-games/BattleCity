@@ -5,7 +5,6 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UAimingComponent;
 class UTurretComponent;
 
 UCLASS()
@@ -25,10 +24,18 @@ public:
 	void Fire();
 
 protected:
-	UAimingComponent* AimingComponent = nullptr;
-	
+	class UAimingComponent* AimingComponent{ nullptr };
+	UTurretComponent* Muzzle{ nullptr };
+
 private:
 
 	UPROPERTY(EditAnywhere, Category="Firing")
 	float LaunchSpeed = 1000;
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	TSubclassOf<class AProjectile> Projectile;
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float ReloadTime = 3.0f;
+	double LastShootTime = 0.0;
 };

@@ -1,6 +1,8 @@
 // Viktor Gomeniuk : https://github.com/vgomeniuk
 
 #include "Tank.h"
+#include "Runtime/Engine/Classes/Engine/StaticMeshSocket.h"
+#include "Projectile.h"
 #include "AimingComponent.h"
 #include "TurretComponent.h"
 
@@ -19,10 +21,19 @@ void ATank::AimAt(FVector AimLocation) {
 }
 
 void ATank::Fire() {
-	UE_LOG(LogTemp, Warning, TEXT("Fire"));
+	bool bIsReloading = (FPlatformTime::Seconds() - LastShootTime) <= ReloadTime;
+	if ( !Muzzle || !Projectile || bIsReloading ) { return; }
+	AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
+		Projectile,
+		Muzzle->GetSocketLocation(FName("Projectile")),
+		Muzzle->GetSocketRotation(FName("Projectile"))
+	);
+	Prj->Launch(LaunchSpeed);
+	LastShootTime = FPlatformTime::Seconds();
 }
 
 
 void ATank::SetTurret(UTurretComponent* Turret) {
+	Muzzle = Turret;
 	AimingComponent->SetTurret(Turret);
 }
