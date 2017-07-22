@@ -17,7 +17,10 @@ public:
 	void Initialise(UTrackComponent* Left, UTrackComponent* Right);
 
 	UFUNCTION(BlueprintCallable, Category = "Action")
-	void Move(float Throttle);
+	void Move(float Throw);
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void Turn(float Throw);
 
 private:
 	UTrackComponent* Left = nullptr;

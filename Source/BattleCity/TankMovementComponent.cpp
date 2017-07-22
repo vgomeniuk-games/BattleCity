@@ -9,8 +9,12 @@ void UTankMovementComponent::Initialise(UTrackComponent* Left, UTrackComponent* 
 }
 
 
-void UTankMovementComponent::Move(float Throttle) {
-	UE_LOG(LogTemp, Warning, TEXT("UTankMovementComponent::MoveForward: %f"), Throttle);
+void UTankMovementComponent::Move(float Throw) {
+	Left->SetThrottle(Throw);
+	Right->SetThrottle(Throw);
 }
 
-
+void UTankMovementComponent::Turn(float Throw) {
+	Left->SetThrottle(Throw);
+	Right->SetThrottle(-Throw);
+}
