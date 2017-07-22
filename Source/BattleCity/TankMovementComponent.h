@@ -22,6 +22,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Action")
 	void Turn(float Throw);
 
+private:
 	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:

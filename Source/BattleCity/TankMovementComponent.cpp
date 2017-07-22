@@ -20,8 +20,15 @@ void UTankMovementComponent::Turn(float Throw) {
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
+	// Get forward direction and direction pawn is intent to move
 	FVector Forward = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	FVector Intention = MoveVelocity.GetSafeNormal();
+
+	// Move to asked direction
 	float Throw = FVector::DotProduct(Forward, Intention);
 	Move(Throw);
+
+	// Rotate to asked direction
+	float Rotate = FVector::CrossProduct(Forward, Intention).Z;
+	Turn(Rotate);
 }
