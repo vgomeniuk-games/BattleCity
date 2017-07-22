@@ -9,7 +9,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	ATank* ControlledTank = Cast<ATank>(GetPawn());
 	ATank* Enemy = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	if (Enemy) {
-		// TODO: Move closer
+		MoveToActor(Enemy, AcceptanceRadius);
 		ControlledTank->AimAt(Enemy->GetActorLocation());
 		ControlledTank->Fire();
 	}

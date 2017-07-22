@@ -18,3 +18,10 @@ void UTankMovementComponent::Turn(float Throw) {
 	Left->SetThrottle(Throw);
 	Right->SetThrottle(-Throw);
 }
+
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
+	FVector Forward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	FVector Intention = MoveVelocity.GetSafeNormal();
+	float Throw = FVector::DotProduct(Forward, Intention);
+	Move(Throw);
+}

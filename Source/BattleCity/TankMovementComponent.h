@@ -22,6 +22,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Action")
 	void Turn(float Throw);
 
+	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 	UTrackComponent* Left = nullptr;
 	UTrackComponent* Right = nullptr;

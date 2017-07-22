@@ -16,5 +16,9 @@ class BATTLECITY_API ATankAIController : public AAIController
 	
 public:
 	virtual void Tick(float DeltaTime) override;
-		
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
+	float AcceptanceRadius = 300.0f;  // TODO: Find sensible value
+
 };
