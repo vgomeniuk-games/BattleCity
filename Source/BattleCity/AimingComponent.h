@@ -13,8 +13,11 @@ class BATTLECITY_API UAimingComponent : public UActorComponent
 
 public:	
 	UAimingComponent();
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTurretComponent* Component);
+
 	virtual void AimAt(const FVector& AimLocation, float LaunchSpeed);
-	virtual void SetTurret(UTurretComponent* Component);
 
 protected:
 	virtual void RotateTurret(FVector DesiredDirection);

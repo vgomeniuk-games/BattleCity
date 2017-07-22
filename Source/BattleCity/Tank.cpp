@@ -5,6 +5,8 @@
 #include "Projectile.h"
 #include "AimingComponent.h"
 #include "TurretComponent.h"
+#include "TankMovementComponent.h"
+
 
 // Sets default values
 ATank::ATank()
@@ -14,6 +16,7 @@ ATank::ATank()
 
 	// Init components
 	AimingComponent = CreateDefaultSubobject<UAimingComponent>(FName("AimingComponent"));
+	MovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
 }
 
 void ATank::AimAt(FVector AimLocation) {
@@ -33,7 +36,6 @@ void ATank::Fire() {
 }
 
 
-void ATank::SetTurret(UTurretComponent* Turret) {
+void ATank::Initialise(UTurretComponent* Turret) {
 	Muzzle = Turret;
-	AimingComponent->SetTurret(Turret);
 }

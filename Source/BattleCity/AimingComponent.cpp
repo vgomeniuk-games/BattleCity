@@ -6,13 +6,8 @@
 
 
 // Sets default values for this component's properties
-UAimingComponent::UAimingComponent()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+UAimingComponent::UAimingComponent() {
 	PrimaryComponentTick.bCanEverTick = false;
-
-	// ...
 }
 
 
@@ -36,7 +31,7 @@ void UAimingComponent::AimAt(const FVector& AimLocation, float LaunchSpeed) {
 }
 
 
-void UAimingComponent::SetTurret(UTurretComponent* Component) {
+void UAimingComponent::Initialise(UTurretComponent* Component) {
 	Turret = Component;
 }
 

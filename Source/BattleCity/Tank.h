@@ -18,13 +18,17 @@ public:
 	void AimAt(FVector AimLocation);
 	
 	UFUNCTION(BlueprintCallable, meta = (Category = "Setup"))
-	void SetTurret(UTurretComponent* Turret);
+	void Initialise(UTurretComponent* Turret);
 
 	UFUNCTION(BlueprintCallable, meta = (Category = "Gameplay Actions"))
 	void Fire();
 
 protected:
-	class UAimingComponent* AimingComponent{ nullptr };
+	UPROPERTY(BlueprintReadOnly)
+	class UTankMovementComponent* MovementComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	class UAimingComponent* AimingComponent = nullptr;
 	UTurretComponent* Muzzle{ nullptr };
 
 private:
