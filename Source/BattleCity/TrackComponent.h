@@ -17,5 +17,5 @@ public:
 	void SetThrottle(float Throttle);
 
 	UPROPERTY(EditDefaultsOnly, meta = (Category="Setup", DisplayName="Max Movement Force (Newtons)"))
-	float TrackMax = 400000000.0f;
+	float TrackMax = 40000000.0f;
 };
