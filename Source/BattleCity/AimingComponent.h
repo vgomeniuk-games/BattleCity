@@ -10,6 +10,7 @@ enum class EFiringState: uint8 {
 };
 
 class UTurretComponent;
+class UMuzzleComponent;
 
 UCLASS( ClassGroup=(Action), meta=(BlueprintSpawnableComponent) )
 class BATTLECITY_API UAimingComponent : public UActorComponent
@@ -20,7 +21,7 @@ public:
 	UAimingComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialise(UTurretComponent* Component);
+	void Initialise(UTurretComponent* Turret, UMuzzleComponent* Muzzle);
 
 	virtual void AimAt(const FVector& AimLocation);
 
@@ -50,5 +51,6 @@ private:
 	double LastShootTime = FPlatformTime::Seconds();
 
 	UTurretComponent* Turret;
+	UMuzzleComponent* Muzzle;
 	FVector AimDirection;
 };

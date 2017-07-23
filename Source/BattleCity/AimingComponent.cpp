@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Engine.h"
 #include "TurretComponent.h"
+#include "MuzzleComponent.h"
 #include "Projectile.h"
 
 
@@ -31,25 +32,28 @@ void UAimingComponent::AimAt(const FVector& AimLocation) {
 }
 
 void UAimingComponent::Fire() {
-	if (!ensure(Turret && Projectile)) { return; }
+	if (!ensure(Turret && Projectile && Muzzle)) { return; }
 	if (State != EFiringState::Reload) {
 		AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
 			Projectile,
 			Turret->GetSocketLocation(FName("Projectile")),
-			Turret->GetSocketRotation(FName("Projectile")));
+			Muzzle->GetComponentRotation()
+		);
 		Prj->Launch(LaunchSpeed);
 		LastShootTime = FPlatformTime::Seconds();
 	}
 }
 
-void UAimingComponent::Initialise(UTurretComponent* Component) {
-	Turret = Component;
+void UAimingComponent::Initialise(UTurretComponent* Turret, UMuzzleComponent* Muzzle) {
+	this->Turret = Turret;
+	this->Muzzle = Muzzle;
 }
 
 void UAimingComponent::RotateTurret(FVector DesiredDirection) {
 	// Calculate rotation difference and rotate turret respectively
 	FRotator Delta = DesiredDirection.Rotation() - Turret->GetForwardVector().Rotation();
 	FMath::Abs(Delta.Yaw) > 180 ? Turret->Rotate(-Delta.Yaw) : Turret->Rotate(Delta.Yaw);
+	Muzzle->Elevate(Delta.Pitch);
 }
 
 void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
