@@ -25,7 +25,8 @@ void ATank::AimAt(FVector AimLocation) {
 
 void ATank::Fire() {
 	bool bIsReloading = (FPlatformTime::Seconds() - LastShootTime) <= ReloadTime;
-	if ( !Muzzle || !Projectile || bIsReloading ) { return; }
+
+	if ( !ensure(Muzzle && Projectile) || bIsReloading ) { return; }
 	AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
 		Projectile,
 		Muzzle->GetSocketLocation(FName("Projectile")),

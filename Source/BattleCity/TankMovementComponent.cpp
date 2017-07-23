@@ -4,8 +4,9 @@
 #include "TrackComponent.h"
 
 void UTankMovementComponent::Initialise(UTrackComponent* Left, UTrackComponent* Right) {
-	if (Left) { this->Left = Left; }
-	if (Right) { this->Right = Right; }
+	if (!ensure(Left && Right)) { return; }
+	this->Left = Left;
+	this->Right = Right;
 }
 
 

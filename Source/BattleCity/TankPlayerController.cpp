@@ -17,7 +17,7 @@ ATank* ATankPlayerController::GetControlledTank() const {
 
 void ATankPlayerController::AimTowardsCrosshair() {
 	ATank* player = GetControlledTank();
-	if (!player) { return; }
+	if (!ensure(player)) { return; }
 
 	// Trace to world position
 	FVector HitLocation;
