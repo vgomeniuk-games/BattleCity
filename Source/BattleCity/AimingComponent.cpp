@@ -9,7 +9,7 @@
 
 // Sets default values for this component's properties
 UAimingComponent::UAimingComponent() {
-	PrimaryComponentTick.bCanEverTick = true;;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
 void UAimingComponent::AimAt(const FVector& AimLocation) {
@@ -57,6 +57,7 @@ void UAimingComponent::RotateTurret(FVector DesiredDirection) {
 }
 
 void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	if ((FPlatformTime::Seconds() - LastShootTime) <= ReloadTime) {
 		State = EFiringState::Reload;
 		return;
