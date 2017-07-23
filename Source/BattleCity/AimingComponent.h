@@ -22,7 +22,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTurretComponent* Component);
 
-	virtual void AimAt(const FVector& AimLocation, float LaunchSpeed);
+	virtual void AimAt(const FVector& AimLocation);
 
 protected:
 	virtual void RotateTurret(FVector DesiredDirection);
@@ -32,6 +32,9 @@ protected:
 	EFiringState State = EFiringState::Reload;
 
 private:
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 1000;
+
 	UTurretComponent* Turret;
 	
 };

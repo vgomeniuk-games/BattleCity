@@ -11,7 +11,7 @@ UAimingComponent::UAimingComponent() {
 }
 
 
-void UAimingComponent::AimAt(const FVector& AimLocation, float LaunchSpeed) {
+void UAimingComponent::AimAt(const FVector& AimLocation) {
 	if (!ensure(Turret)) { return; }
 
 	// Try to calculate Launch Velocity based on possible projectile trajectory
