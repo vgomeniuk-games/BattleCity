@@ -24,12 +24,9 @@ public:
 	void Fire();
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
 	class UTankMovementComponent* MovementComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
 	class UAimingComponent* AimingComponent = nullptr;
-	UTurretComponent* Muzzle{ nullptr };
+	UTurretComponent* Muzzle = nullptr;  // TODO: Remove
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")

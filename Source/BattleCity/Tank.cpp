@@ -9,17 +9,12 @@
 
 
 // Sets default values
-ATank::ATank()
-{
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ATank::ATank() {
 	PrimaryActorTick.bCanEverTick = false;
-
-	// Init components
-	AimingComponent = CreateDefaultSubobject<UAimingComponent>(FName("AimingComponent"));
-	MovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
 }
 
 void ATank::AimAt(FVector AimLocation) {
+	if (!ensure(AimingComponent)) { return; }
 	AimingComponent->AimAt(AimLocation, LaunchSpeed);
 }
 
