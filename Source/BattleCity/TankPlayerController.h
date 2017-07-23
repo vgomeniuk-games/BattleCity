@@ -18,7 +18,6 @@ public:
 	void OnAimingComponentFound(class UAimingComponent* Component);
 
 protected:
-	virtual class ATank* GetControlledTank() const;
 	void AimTowardsCrosshair();
 	bool TraceHitLocation(FVector& HitLocation) const;
 

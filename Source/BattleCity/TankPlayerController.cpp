@@ -1,14 +1,13 @@
 // Viktor Gomeniuk : https://github.com/vgomeniuk
 
 #include "TankPlayerController.h"
-#include "Tank.h"
 #include "AimingComponent.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 
 	// Generate event to pass Component reference
-	UAimingComponent* Component = GetControlledTank()->FindComponentByClass<UAimingComponent>();
+	UAimingComponent* Component = GetPawn()->FindComponentByClass<UAimingComponent>();
 	if (ensure(Component)) {
 		OnAimingComponentFound(Component);
 	}
@@ -19,18 +18,14 @@ void ATankPlayerController::Tick(float DeltaTime) {
 	AimTowardsCrosshair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const {
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrosshair() {
-	ATank* player = GetControlledTank();
-	if (!ensure(player)) { return; }
+	UAimingComponent* Component = GetPawn()->FindComponentByClass<UAimingComponent>();
+	if (!ensure(Component)) { return; }
 
 	// Trace to world position
 	FVector HitLocation;
 	if (TraceHitLocation(HitLocation)) {
-		player->AimAt(HitLocation);
+		Component->AimAt(HitLocation);
 	}
 }
 
