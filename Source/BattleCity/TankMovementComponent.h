@@ -7,7 +7,7 @@
 
 class UTrackComponent;
 
-UCLASS()
+UCLASS(meta = (BlueprintSpawnableComponent), ClassGroup = (Action))
 class BATTLECITY_API UTankMovementComponent : public UNavMovementComponent
 {
 	GENERATED_BODY()

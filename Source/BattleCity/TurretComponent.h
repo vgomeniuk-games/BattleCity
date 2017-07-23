@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS(meta = (BlueprintSpawnableComponent), ClassGroup = (Custom))
+UCLASS(meta = (BlueprintSpawnableComponent), ClassGroup = (TankMesh))
 class BATTLECITY_API UTurretComponent : public UStaticMeshComponent
 {
 	GENERATED_BODY()

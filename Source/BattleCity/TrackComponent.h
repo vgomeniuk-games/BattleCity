@@ -7,7 +7,7 @@
 #include "TrackComponent.generated.h"
 
 
-UCLASS(meta = (BlueprintSpawnableComponent), ClassGroup = (Custom))
+UCLASS(meta = (BlueprintSpawnableComponent), ClassGroup = (TankMesh))
 class BATTLECITY_API UTrackComponent : public UStaticMeshComponent
 {
 	GENERATED_BODY()

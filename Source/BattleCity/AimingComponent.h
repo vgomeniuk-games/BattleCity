@@ -11,7 +11,7 @@ enum class EFiringState: uint8 {
 
 class UTurretComponent;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Action), meta=(BlueprintSpawnableComponent) )
 class BATTLECITY_API UAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
