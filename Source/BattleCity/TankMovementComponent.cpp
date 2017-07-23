@@ -11,11 +11,15 @@ void UTankMovementComponent::Initialise(UTrackComponent* Left, UTrackComponent* 
 
 
 void UTankMovementComponent::Move(float Throw) {
+	if (!ensure(Left && Right)) { return; }
+
 	Left->SetThrottle(Throw);
 	Right->SetThrottle(Throw);
 }
 
 void UTankMovementComponent::Turn(float Throw) {
+	if (!ensure(Left && Right)) { return; }
+
 	Left->SetThrottle(Throw);
 	Right->SetThrottle(-Throw);
 }
