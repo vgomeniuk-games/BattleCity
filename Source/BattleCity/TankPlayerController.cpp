@@ -1,9 +1,17 @@
 // Viktor Gomeniuk : https://github.com/vgomeniuk
 
 #include "TankPlayerController.h"
+#include "Tank.h"
+#include "AimingComponent.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
+
+	// Generate event to pass Component reference
+	UAimingComponent* Component = GetControlledTank()->FindComponentByClass<UAimingComponent>();
+	if (ensure(Component)) {
+		OnAimingComponentFound(Component);
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {

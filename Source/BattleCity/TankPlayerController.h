@@ -1,7 +1,6 @@
 // Viktor Gomeniuk : https://github.com/vgomeniuk
 
 #pragma once
-#include "Tank.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
@@ -15,10 +14,11 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	virtual ATank* GetControlledTank() const;
+	UFUNCTION(BlueprintImplementableEvent, meta = (Category = "Setup"))
+	void OnAimingComponentFound(class UAimingComponent* Component);
 
-private:
+protected:
+	virtual class ATank* GetControlledTank() const;
 	void AimTowardsCrosshair();
 	bool TraceHitLocation(FVector& HitLocation) const;
 
