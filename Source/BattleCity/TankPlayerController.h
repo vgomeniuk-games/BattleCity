@@ -14,6 +14,8 @@ class BATTLECITY_API ATankPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	virtual ATank* GetControlledTank() const;
 
 private:

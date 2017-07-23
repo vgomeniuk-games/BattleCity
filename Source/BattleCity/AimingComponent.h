@@ -4,6 +4,11 @@
 #include "Components/ActorComponent.h"
 #include "AimingComponent.generated.h"
 
+UENUM()
+enum class EFiringState: uint8 {
+	Reload, Aiming, Locked
+};
+
 class UTurretComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -21,6 +26,10 @@ public:
 
 protected:
 	virtual void RotateTurret(FVector DesiredDirection);
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Firing State")
+	EFiringState State = EFiringState::Reload;
 
 private:
 	UTurretComponent* Turret;
