@@ -30,6 +30,10 @@ public:
 protected:
 	virtual void RotateTurret(FVector DesiredDirection);
 
+private:
+	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
+	bool IsAiming();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Firing State")
 	EFiringState State = EFiringState::Reload;
@@ -43,7 +47,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTime = 3.0f;
-	double LastShootTime = 0.0;
+	double LastShootTime = FPlatformTime::Seconds();
 
 	UTurretComponent* Turret;
+	FVector AimDirection;
 };
