@@ -16,6 +16,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
+protected:
 	UPROPERTY(EditDefaultsOnly, meta = (Category="Setup", DisplayName="Max Movement Force (Newtons)"))
-	float TrackMax = 40000000.0f;
+	float TrackMax = 20000000.0f;
+
+private:
+	UTrackComponent();
+	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
+
 };
