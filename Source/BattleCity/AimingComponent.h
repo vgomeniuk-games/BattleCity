@@ -24,6 +24,9 @@ public:
 
 	virtual void AimAt(const FVector& AimLocation);
 
+	UFUNCTION(BlueprintCallable, meta = (Category = "Gameplay Actions"))
+	void Fire();
+
 protected:
 	virtual void RotateTurret(FVector DesiredDirection);
 
@@ -35,6 +38,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 1000;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	TSubclassOf<class AProjectile> Projectile;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTime = 3.0f;
+	double LastShootTime = 0.0;
+
 	UTurretComponent* Turret;
-	
 };

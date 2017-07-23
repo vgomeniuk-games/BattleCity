@@ -2,14 +2,15 @@
 #include "AimingComponent.h"
 #include "CoreMinimal.h"
 #include "Engine.h"
+#include "Runtime/Engine/Classes/Engine/StaticMeshSocket.h"
 #include "TurretComponent.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
 UAimingComponent::UAimingComponent() {
 	PrimaryComponentTick.bCanEverTick = false;
 }
-
 
 void UAimingComponent::AimAt(const FVector& AimLocation) {
 	if (!ensure(Turret)) { return; }
@@ -28,6 +29,19 @@ void UAimingComponent::AimAt(const FVector& AimLocation) {
 		RotateTurret(AimDirection);
 	};
 	
+}
+
+void UAimingComponent::Fire() {
+	bool bIsReloading = (FPlatformTime::Seconds() - LastShootTime) <= ReloadTime;
+
+	if (!ensure(Turret && Projectile) || bIsReloading) { return; }
+	AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
+		Projectile,
+		Turret->GetSocketLocation(FName("Projectile")),
+		Turret->GetSocketRotation(FName("Projectile"))
+		);
+	Prj->Launch(LaunchSpeed);
+	LastShootTime = FPlatformTime::Seconds();
 }
 
 
