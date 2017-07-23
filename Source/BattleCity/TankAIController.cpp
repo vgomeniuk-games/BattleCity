@@ -1,16 +1,17 @@
 // Viktor Gomeniuk : https://github.com/vgomeniuk
 
 #include "TankAIController.h"
+#include "AimingComponent.h"
 
 
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	ATank* ControlledTank = Cast<ATank>(GetPawn());
-	ATank* Enemy = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (Enemy) {
+	UAimingComponent* Component = GetPawn()->FindComponentByClass<UAimingComponent>();
+	APawn* Enemy = GetWorld()->GetFirstPlayerController()->GetPawn();
+	if (ensure(Enemy && GetPawn() && Component)) {
 		MoveToActor(Enemy, AcceptanceRadius);
-		ControlledTank->AimAt(Enemy->GetActorLocation());
-		ControlledTank->Fire();
+		Component->AimAt(Enemy->GetActorLocation());
+		//ControlledTank->Fire();
 	}
 }
