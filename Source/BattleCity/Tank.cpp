@@ -3,7 +3,6 @@
 #include "Tank.h"
 #include "Runtime/Engine/Classes/Engine/StaticMeshSocket.h"
 #include "Projectile.h"
-#include "AimingComponent.h"
 #include "TurretComponent.h"
 #include "TankMovementComponent.h"
 
@@ -11,13 +10,6 @@
 // Sets default values
 ATank::ATank() {
 	PrimaryActorTick.bCanEverTick = false;
-}
-
-void ATank::AimAt(FVector AimLocation) {
-	UAimingComponent* Component = FindComponentByClass<UAimingComponent>();
-	if (ensure(Component)) {
-		Component->AimAt(AimLocation, LaunchSpeed);
-	}
 }
 
 void ATank::Fire() {

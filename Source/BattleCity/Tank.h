@@ -15,7 +15,6 @@ class BATTLECITY_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
-	void AimAt(FVector AimLocation);
 	
 	UFUNCTION(BlueprintCallable, meta = (Category = "Setup"))
 	void Initialise(UTurretComponent* Turret);
