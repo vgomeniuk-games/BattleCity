@@ -8,7 +8,7 @@
 
 // Sets default values for this component's properties
 UAimingComponent::UAimingComponent() {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;;
 }
 
 void UAimingComponent::AimAt(const FVector& AimLocation) {
@@ -24,32 +24,45 @@ void UAimingComponent::AimAt(const FVector& AimLocation) {
 
 	// If succeed
 	if (bSolutionFound) {
-		FVector AimDirection = LaunchVelocity.GetSafeNormal();
+		AimDirection = LaunchVelocity.GetSafeNormal();
 		RotateTurret(AimDirection);
 	};
 	
 }
 
 void UAimingComponent::Fire() {
-	bool bIsReloading = (FPlatformTime::Seconds() - LastShootTime) <= ReloadTime;
-
-	if (!ensure(Turret && Projectile) || bIsReloading) { return; }
-	AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
-		Projectile,
-		Turret->GetSocketLocation(FName("Projectile")),
-		Turret->GetSocketRotation(FName("Projectile")));
-	Prj->Launch(LaunchSpeed);
-	LastShootTime = FPlatformTime::Seconds();
+	if (!ensure(Turret && Projectile)) { return; }
+	if (State != EFiringState::Reload) {
+		AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
+			Projectile,
+			Turret->GetSocketLocation(FName("Projectile")),
+			Turret->GetSocketRotation(FName("Projectile")));
+		Prj->Launch(LaunchSpeed);
+		LastShootTime = FPlatformTime::Seconds();
+	}
 }
-
 
 void UAimingComponent::Initialise(UTurretComponent* Component) {
 	Turret = Component;
 }
-
 
 void UAimingComponent::RotateTurret(FVector DesiredDirection) {
 	// Calculate rotation difference and rotate turret respectively
 	FRotator Delta = DesiredDirection.Rotation() - Turret->GetForwardVector().Rotation();
 	FMath::Abs(Delta.Yaw) > 180 ? Turret->Rotate(-Delta.Yaw) : Turret->Rotate(Delta.Yaw);
 }
+
+void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
+	if ((FPlatformTime::Seconds() - LastShootTime) <= ReloadTime) {
+		State = EFiringState::Reload;
+		return;
+	}
+	IsAiming() ? State = EFiringState::Aiming : State = EFiringState::Locked;
+}
+
+bool UAimingComponent::IsAiming() {
+	if (!ensure(Turret)) { return false; }
+	FVector Forward = Turret->GetForwardVector();
+	return !Forward.Equals(AimDirection, 0.01);
+}
+
