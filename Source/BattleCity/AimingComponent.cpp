@@ -2,7 +2,6 @@
 #include "AimingComponent.h"
 #include "CoreMinimal.h"
 #include "Engine.h"
-#include "Runtime/Engine/Classes/Engine/StaticMeshSocket.h"
 #include "TurretComponent.h"
 #include "Projectile.h"
 
@@ -38,8 +37,7 @@ void UAimingComponent::Fire() {
 	AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
 		Projectile,
 		Turret->GetSocketLocation(FName("Projectile")),
-		Turret->GetSocketRotation(FName("Projectile"))
-		);
+		Turret->GetSocketRotation(FName("Projectile")));
 	Prj->Launch(LaunchSpeed);
 	LastShootTime = FPlatformTime::Seconds();
 }
