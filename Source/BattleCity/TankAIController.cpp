@@ -12,6 +12,6 @@ void ATankAIController::Tick(float DeltaTime) {
 	if (ensure(Enemy && GetPawn() && Component)) {
 		MoveToActor(Enemy, AcceptanceRadius);
 		Component->AimAt(Enemy->GetActorLocation());
-		//ControlledTank->Fire();
+		Component->Fire();
 	}
 }
