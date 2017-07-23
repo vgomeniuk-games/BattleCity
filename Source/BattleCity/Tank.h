@@ -24,8 +24,6 @@ public:
 	void Fire();
 
 protected:
-	class UTankMovementComponent* MovementComponent = nullptr;
-	class UAimingComponent* AimingComponent = nullptr;
 	UTurretComponent* Muzzle = nullptr;  // TODO: Remove
 
 private:

@@ -14,8 +14,10 @@ ATank::ATank() {
 }
 
 void ATank::AimAt(FVector AimLocation) {
-	if (!ensure(AimingComponent)) { return; }
-	AimingComponent->AimAt(AimLocation, LaunchSpeed);
+	UAimingComponent* Component = FindComponentByClass<UAimingComponent>();
+	if (ensure(Component)) {
+		Component->AimAt(AimLocation, LaunchSpeed);
+	}
 }
 
 void ATank::Fire() {
