@@ -29,7 +29,7 @@ public:
 	void Fire();
 
 protected:
-	virtual void RotateTurret(FVector DesiredDirection);
+	virtual void RotateTowards(FVector DesiredDirection);
 
 private:
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);

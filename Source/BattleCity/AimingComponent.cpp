@@ -26,7 +26,7 @@ void UAimingComponent::AimAt(const FVector& AimLocation) {
 	// If succeed
 	if (bSolutionFound) {
 		AimDirection = LaunchVelocity.GetSafeNormal();
-		RotateTurret(AimDirection);
+		RotateTowards(AimDirection);
 	};
 	
 }
@@ -49,7 +49,8 @@ void UAimingComponent::Initialise(UTurretComponent* Turret, UMuzzleComponent* Mu
 	this->Muzzle = Muzzle;
 }
 
-void UAimingComponent::RotateTurret(FVector DesiredDirection) {
+void UAimingComponent::RotateTowards(FVector DesiredDirection) {
+	if (!ensure(Turret && Muzzle)) { return; }
 	// Calculate rotation difference and rotate turret respectively
 	FRotator Delta = DesiredDirection.Rotation() - Turret->GetForwardVector().Rotation();
 	FMath::Abs(Delta.Yaw) > 180 ? Turret->Rotate(-Delta.Yaw) : Turret->Rotate(Delta.Yaw);
@@ -66,8 +67,8 @@ void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, 
 }
 
 bool UAimingComponent::IsAiming() {
-	if (!ensure(Turret)) { return false; }
-	FVector Forward = Turret->GetForwardVector();
+	if (!ensure(Muzzle)) { return false; }
+	FVector Forward = Muzzle->GetForwardVector();
 	return !Forward.Equals(AimDirection, 0.01);
 }
 
