@@ -15,12 +15,9 @@ class BATTLECITY_API UMuzzleComponent : public UArrowComponent
 	GENERATED_BODY()
 	
 public:
-	void Elevate(float RelativeSpeed);
+	void Elevate(float Degree);
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Setup", DisplayName="Elevation Speed (degree-per-second)")
-	float ElevationSpeed = 25;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxElevation = 50;
 
