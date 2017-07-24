@@ -20,6 +20,12 @@ public:
 
 	void Launch(float Spped);
 protected:
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UStaticMeshComponent* Mesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	class UParticleSystemComponent* Blast = nullptr;
+
 	class UProjectileMovementComponent* PrMovComponent{ nullptr };
 	
 };
