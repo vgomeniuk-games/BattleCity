@@ -28,6 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (Category = "Gameplay Actions"))
 	void Fire();
 
+	EFiringState GetState() const;
+
 protected:
 	virtual void RotateTowards(FVector DesiredDirection);
 

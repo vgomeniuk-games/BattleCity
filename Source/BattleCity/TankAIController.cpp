@@ -12,6 +12,9 @@ void ATankAIController::Tick(float DeltaTime) {
 	if (ensure(Enemy && GetPawn() && Component)) {
 		MoveToActor(Enemy, AcceptanceRadius);
 		Component->AimAt(Enemy->GetActorLocation());
-		Component->Fire();
+
+		if (Component->GetState() == EFiringState::Locked) {
+			Component->Fire();
+		}
 	}
 }

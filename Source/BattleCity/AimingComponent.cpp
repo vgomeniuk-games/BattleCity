@@ -44,6 +44,10 @@ void UAimingComponent::Fire() {
 	}
 }
 
+EFiringState UAimingComponent::GetState() const {
+	return State;
+}
+
 void UAimingComponent::Initialise(UTurretComponent* Turret, UMuzzleComponent* Muzzle) {
 	this->Turret = Turret;
 	this->Muzzle = Muzzle;
