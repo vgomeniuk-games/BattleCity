@@ -6,7 +6,7 @@
 
 UENUM()
 enum class EFiringState: uint8 {
-	Reload, Aiming, Locked
+	Reload, Aiming, Locked, OutOfAmmo
 };
 
 class UTurretComponent;
@@ -25,20 +25,23 @@ public:
 
 	virtual void AimAt(const FVector& AimLocation);
 
-	UFUNCTION(BlueprintCallable, meta = (Category = "Gameplay Actions"))
+	UFUNCTION(BlueprintCallable, Category = "Gameplay Actions")
 	void Fire();
 
 	EFiringState GetState() const;
 
+	UFUNCTION(BlueprintCallable, Category="Firing")
+	int GetAmmo() const;
+
 protected:
 	virtual void RotateTowards(FVector DesiredDirection);
+	bool IsAiming();
 
 private:
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
-	bool IsAiming();
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "Firing State")
+	UPROPERTY(BlueprintReadOnly, Category = "Firing")
 	EFiringState State = EFiringState::Reload;
 
 private:
@@ -51,6 +54,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTime = 3.0f;
 	double LastShootTime = FPlatformTime::Seconds();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 AmmoAmount = 3;
 
 	UTurretComponent* Turret;
 	UMuzzleComponent* Muzzle;

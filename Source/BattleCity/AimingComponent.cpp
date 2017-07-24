@@ -12,6 +12,11 @@ UAimingComponent::UAimingComponent() {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+void UAimingComponent::Initialise(UTurretComponent* Turret, UMuzzleComponent* Muzzle) {
+	this->Turret = Turret;
+	this->Muzzle = Muzzle;
+}
+
 void UAimingComponent::AimAt(const FVector& AimLocation) {
 	if (!ensure(Turret)) { return; }
 
@@ -33,7 +38,7 @@ void UAimingComponent::AimAt(const FVector& AimLocation) {
 
 void UAimingComponent::Fire() {
 	if (!ensure(Turret && Projectile && Muzzle)) { return; }
-	if (State != EFiringState::Reload) {
+	if (State == EFiringState::Aiming || State == EFiringState::Locked) {
 		AProjectile* Prj = GetWorld()->SpawnActor<AProjectile>(
 			Projectile,
 			Turret->GetSocketLocation(FName("Projectile")),
@@ -41,6 +46,7 @@ void UAimingComponent::Fire() {
 		);
 		Prj->Launch(LaunchSpeed);
 		LastShootTime = FPlatformTime::Seconds();
+		--AmmoAmount;
 	}
 }
 
@@ -48,9 +54,8 @@ EFiringState UAimingComponent::GetState() const {
 	return State;
 }
 
-void UAimingComponent::Initialise(UTurretComponent* Turret, UMuzzleComponent* Muzzle) {
-	this->Turret = Turret;
-	this->Muzzle = Muzzle;
+int UAimingComponent::GetAmmo() const {
+	return AmmoAmount;
 }
 
 void UAimingComponent::RotateTowards(FVector DesiredDirection) {
@@ -61,18 +66,21 @@ void UAimingComponent::RotateTowards(FVector DesiredDirection) {
 	Muzzle->Elevate(Delta.Pitch);
 }
 
-void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if ((FPlatformTime::Seconds() - LastShootTime) <= ReloadTime) {
-		State = EFiringState::Reload;
-		return;
-	}
-	IsAiming() ? State = EFiringState::Aiming : State = EFiringState::Locked;
-}
-
 bool UAimingComponent::IsAiming() {
 	if (!ensure(Muzzle)) { return false; }
 	FVector Forward = Muzzle->GetForwardVector();
 	return !Forward.Equals(AimDirection, 0.01);
 }
 
+void UAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (AmmoAmount <= 0) {
+		State = EFiringState::OutOfAmmo;
+		return;
+	}
+	if ((FPlatformTime::Seconds() - LastShootTime) <= ReloadTime) {
+		State = EFiringState::Reload;
+		return;
+	}
+	IsAiming() ? State = EFiringState::Aiming : State = EFiringState::Locked;
+}
