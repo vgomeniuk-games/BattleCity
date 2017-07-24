@@ -16,12 +16,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
-protected:
-	UPROPERTY(EditDefaultsOnly, meta = (Category="Setup", DisplayName="Max Movement Force (Newtons)"))
-	float TrackMax = 20000000.0f;
-
 private:
 	UTrackComponent();
-	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
+	void BeginPlay() override;
 
+	void Drive();
+	void ApplySidewaysCorrectionForce();
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+protected:
+	UPROPERTY(EditDefaultsOnly, meta = (Category = "Setup", DisplayName = "Max Movement Force (Newtons)"))
+	float TrackMax = 20000000.0f;
+	
+private:
+	float CurrentThrottle = 0;
 };
