@@ -31,7 +31,7 @@ public:
 	EFiringState GetState() const;
 
 	UFUNCTION(BlueprintCallable, Category="Firing")
-	int GetAmmo() const;
+	int32 GetAmmo() const;
 
 protected:
 	virtual void RotateTowards(FVector DesiredDirection);

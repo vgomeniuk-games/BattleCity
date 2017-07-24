@@ -54,7 +54,7 @@ EFiringState UAimingComponent::GetState() const {
 	return State;
 }
 
-int UAimingComponent::GetAmmo() const {
+int32 UAimingComponent::GetAmmo() const {
 	return AmmoAmount;
 }
 
