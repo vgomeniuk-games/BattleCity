@@ -10,22 +10,27 @@ UCLASS()
 class BATTLECITY_API AProjectile : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	AProjectile();
 
-	// Called every frame
+public:
+	AProjectile();
+	void Launch(float Spped);
+private:
+	void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
 
-	void Launch(float Spped);
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	UStaticMeshComponent* Mesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-	class UParticleSystemComponent* Blast = nullptr;
+	class UParticleSystemComponent* LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	UParticleSystemComponent* ImpactBlast = nullptr;
 
 	class UProjectileMovementComponent* PrMovComponent{ nullptr };
-	
+
 };
