@@ -17,3 +17,7 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEve
 	UE_LOG(LogTemp, Warning, TEXT("Health left: %i"), CurrentHealth);
 	return Damage;
 }
+
+float ATank::GetHealthPercent() const {
+	return static_cast<float>(CurrentHealth) / static_cast<float>(MaxHealth);
+}
