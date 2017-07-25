@@ -2,9 +2,11 @@
 
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 
-// Sets default values
 AProjectile::AProjectile() {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -26,6 +28,10 @@ AProjectile::AProjectile() {
 	// Create Movement component
 	PrMovComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovement"));
 	PrMovComponent->bAutoActivate = false;
+
+	// Setup Force applied to hit objects 
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("ExplosionForce"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void AProjectile::BeginPlay() {
@@ -40,6 +46,29 @@ void AProjectile::Tick(float DeltaTime) {
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+
+	// Reset root and destroy Static Mesh not prevent colliding with other objects
+	SetRootComponent(ImpactBlast);
+	Mesh->DestroyComponent();
+
+	// Apply damage
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		FMath::RandRange(MinDamage, MaxDamage),
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>()
+	);
+	
+	// Set timer to remove actor
+	FTimerHandle _;
+	GetWorld()->GetTimerManager().SetTimer(_, this, &AProjectile::OnExpire, ExpireDelay);
+}
+
+void AProjectile::OnExpire() {
+	Destroy();
 }
 
 void AProjectile::Launch(float Speed) {
