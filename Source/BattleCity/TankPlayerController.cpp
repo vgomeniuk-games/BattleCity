@@ -64,7 +64,7 @@ bool ATankPlayerController::TraceHitLocation(FVector& HitLocation) const {
 	// Trace along found direction
 	FHitResult HitResult;
 	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
-	FVector EndLocation = StartLocation + LookDirection * TraceRange * 100;  // Measurement: cm => m
+	FVector EndLocation = StartLocation + LookDirection * TraceRange * 10000;  // Measurement: cm => m
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Camera)) {
 		HitLocation = HitResult.Location;
 		return true;

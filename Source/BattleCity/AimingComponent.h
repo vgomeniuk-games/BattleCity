@@ -46,17 +46,17 @@ protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 1000;
+	float LaunchSpeed = 1500.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	TSubclassOf<class AProjectile> Projectile;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTime = 3.0f;
+	float ReloadTime = 2.0f;
 	double LastShootTime = FPlatformTime::Seconds();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 AmmoAmount = 3;
+	int32 AmmoAmount = 20;
 
 	UTurretComponent* Turret;
 	UMuzzleComponent* Muzzle;
