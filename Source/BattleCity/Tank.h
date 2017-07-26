@@ -22,6 +22,7 @@ private:
 	void BeginPlay();
 
 public:
+	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FTankDelegate OnDeath;
 
 private:
