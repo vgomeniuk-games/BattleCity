@@ -44,6 +44,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 	class URadialForceComponent* ExplosionForce = nullptr;
 
-	class UProjectileMovementComponent* PrMovComponent{ nullptr };
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+	class UProjectileMovementComponent* PrMovComponent = nullptr;
 
 };
