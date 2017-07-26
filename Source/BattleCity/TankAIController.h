@@ -13,9 +13,12 @@ class BATTLECITY_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-public:
+private:
 	virtual void Tick(float DeltaTime) override;
+	virtual void SetPawn(APawn* InPawn) override;
 
+	UFUNCTION()
+	void OnPossesedDeath();
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 	float AcceptanceRadius = 300.0f;  // TODO: Find sensible value

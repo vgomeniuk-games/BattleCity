@@ -5,7 +5,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTurretComponent;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
 UCLASS()
 class BATTLECITY_API ATank : public APawn
@@ -19,11 +19,13 @@ public:
 	float GetHealthPercent() const;
 private:
 	ATank();
+	void BeginPlay();
+
+public:
+	FTankDelegate OnDeath;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay", DisplayName = "Health")
 	int32 MaxHealth = 100;
-
-	UPROPERTY(VisibleAnywhere, Category = "Gameplay", DisplayName = "Health")
-	int32 CurrentHealth = MaxHealth;
+	int32 CurrentHealth;
 };

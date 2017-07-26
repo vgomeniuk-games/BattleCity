@@ -20,6 +20,10 @@ public:
 protected:
 	void AimTowardsCrosshair();
 	bool TraceHitLocation(FVector& HitLocation) const;
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPossesedDeath();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "CrosshairPosition", DisplayName = "X")

@@ -7,14 +7,18 @@ ATank::ATank() {
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay() {
+	Super::BeginPlay();
+	CurrentHealth = MaxHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) {
 	int32 Damage = FPlatformMath::RoundToInt(DamageAmount);
 	Damage = FMath::Clamp<int32>(Damage, 0, CurrentHealth);
 	CurrentHealth -= Damage;
 	if (CurrentHealth <= 0) {
-		// TODO: Die
+		OnDeath.Broadcast();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Health left: %i"), CurrentHealth);
 	return Damage;
 }
 
