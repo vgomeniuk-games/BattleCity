@@ -1,7 +1,7 @@
 # BattleCity
 Tank-battle 3d game developed using Unreal Engine 4.
 
-![Sample](https://github.com/vgomeniuk/BattleCity/blob/master/BattleCity.gif)
+![Sample](https://github.com/vgomeniuk-games/BattleCity/blob/master/BattleCity.gif)
 
 Game was developed using free UE Marketplace and Unity Asset Store assets.
 
